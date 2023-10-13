@@ -40,9 +40,15 @@ import org.springframework.web.server.ResponseStatusException;
  * @author Paul Henke
  * @author Oliver Drotbohm
  */
+
+
+// NICOLA: Spring MVC creates instance of the controller class and inspects it for mapping annotations so that it can route incoming requests to them 
+
 @Controller
 class GuestbookController {
 
+	// NICOLA: controller has dependency on guestbook repo
+	
 	private final GuestbookRepository guestbook;
 
 	/**
@@ -63,8 +69,14 @@ class GuestbookController {
 	 *
 	 * @return a redirect string
 	 */
-	@GetMapping(path = "/")
+	
+	// NICOLA: maps the method to a particular request, ie if a request is matching the configuration, the method will be called
+	// NICOLA: since we are in controller class, our method is called for GET requests to quote/url piece
+	
+	@GetMapping(path = "/") // NICOLA: the quote is the URL path that the controller method will respond to
 	String index() {
+		// NICOLA: method returns a logical name to select a VIEW
+		// NICOLA: return quote is translated into a lookup of a file under templates/redirect... or templates/guestbook?
 		return "redirect:/guestbook";
 	}
 
@@ -76,6 +88,13 @@ class GuestbookController {
 	 * @param form the form to be added to the model
 	 * @return a view name
 	 */
+	
+	// NICOLA: input has to be added to model (handles data logic, interacts with data base)
+	// NICOLA: framework provides access to the model if we declare corresponding parameter
+	// NICOLA: model is populated with addAttribute
+	
+	// TODO: fill model
+	
 	@GetMapping(path = "/guestbook")
 	String guestBook(Model model, @ModelAttribute(binding = false) GuestbookForm form) {
 
@@ -140,7 +159,7 @@ class GuestbookController {
 	 * @param form the form submitted by the user
 	 * @param model the model that's used to render the view
 	 * @return a reference to a Thymeleaf template fragment
-	 * @see #addEntry(String, String)
+	 * @see #addEntry(String, String, String) // NICOLA changed this line
 	 */
 	@HxRequest
 	@PostMapping(path = "/guestbook")
