@@ -16,6 +16,7 @@
 package guestbook;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Type to bind request payloads and make them available in the controller. In contrast to {@link GuestbookEntry} it is
@@ -33,6 +34,7 @@ class GuestbookForm {
 	private final @NotBlank String text;
 	private final @NotBlank String email;
 	private final @NotBlank String favourite;
+	private final @NotNull Mood mood;
 
 	/**
 	 * Creates a new {@link GuestbookForm} with the given name and text. Spring Framework will use this constructor to
@@ -45,12 +47,13 @@ class GuestbookForm {
 	 * @param text the value to bind to {@code text}
 	 * @param email the value to bind to {@code email}
 	 */
-	public GuestbookForm(String name, String text, String email, String favourite) {
+	public GuestbookForm(String name, String text, String email, String favourite, Mood mood) {
 
 		this.name = name;
 		this.text = text;
 		this.email = email;
 		this.favourite = favourite;
+		this.mood = mood;
 	}
 
 	/**
@@ -82,6 +85,10 @@ class GuestbookForm {
 	public String getFavourite() {
 		return favourite;
 	}
+	
+	public Mood getMood() {
+		return mood;
+	}
 
 	/**
 	 * Returns a new {@link GuestbookEntry} using the data submitted in the request.
@@ -90,6 +97,6 @@ class GuestbookForm {
 	 * @throws IllegalArgumentException if you call this on an instance without the name and text actually set.
 	 */
 	GuestbookEntry toNewEntry() {
-		return new GuestbookEntry(getName(), getText(), getEmail(), getFavourite());
+		return new GuestbookEntry(getName(), getText(), getEmail(), getFavourite(), getMood());
 	}
 }

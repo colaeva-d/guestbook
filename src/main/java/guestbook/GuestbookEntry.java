@@ -39,6 +39,8 @@ class GuestbookEntry {
 	// NICOLA adds
 	private final String email;
 	private final String favourite;
+	private final Mood mood;
+	
 
 	/**
 	 * Creates a new {@link GuestbookEntry} for the given name and text.
@@ -47,18 +49,20 @@ class GuestbookEntry {
 	 * @param text must not be {@literal null} or empty
 	 * @param email must not be {@literal null} or empty // NICOLA adds
 	 */
-	public GuestbookEntry(String name, String text, String email, String favourite) {
+	public GuestbookEntry(String name, String text, String email, String favourite, Mood mood) {
 
 		Assert.hasText(name, "Name must not be null or empty!");
 		Assert.hasText(text, "Text must not be null or empty!");
 		Assert.hasText(email, "Email must not be null or empty!");
 		Assert.hasText(favourite, "Favourite thing must not be null or empty!");
+		Assert.notNull(mood, "Mood must not be null");
 
 		this.name = name;
 		this.text = text;
 		this.date = LocalDateTime.now();
 		this.email = email;
 		this.favourite = favourite;
+		this.mood = mood;
 	}
 
 	@SuppressWarnings("unused")
@@ -68,6 +72,7 @@ class GuestbookEntry {
 		this.date = null;
 		this.email = null;
 		this.favourite = null;
+		this.mood = null;
 	}
 
 	public String getName() {
@@ -92,5 +97,9 @@ class GuestbookEntry {
 	
 	public String getFavourite() {
 		return favourite;
+	}
+	
+	public Mood getMood(){
+		return mood;
 	}
 }
